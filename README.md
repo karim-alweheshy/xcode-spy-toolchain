@@ -152,31 +152,15 @@ BACKUP_DIR="$TOOLCHAIN_BIN_DIR/backups"
 LOG_FILE="$HOME/xcode_toolchain_logs.txt"
 
 # --------------------------
-# Create Backup Directory
-# --------------------------
-if [ ! -d "$BACKUP_DIR" ]; then
-  echo "Creating backup directory at $BACKUP_DIR..."
-  mkdir "$BACKUP_DIR"
-fi
-
-# --------------------------
 # Function to Create Wrapper
 # --------------------------
 create_wrapper() {
   local bin_path="$1"
   local bin_name
-  bin_name="$(basename "$bin_path")"
+  # Resolve symlinks to get the actual binary name
+  bin_path_resolved="$(realpath "$bin_path")"
+  bin_name="$(basename "$bin_path_resolved")"
   
-  # Skip if it's already backed up
-  if [ -f "$BACKUP_DIR/$bin_name" ]; then
-    echo "Skipping $bin_name as it's already backed up."
-    return
-  fi
-
-  # Backup the original binary
-  echo "Backing up $bin_name..."
-  mv "$bin_path" "$BACKUP_DIR/"
-
   # Create the wrapper script
   echo "Creating wrapper for $bin_name..."
   cat <<EOF > "$TOOLCHAIN_BIN_DIR/$bin_name"
@@ -184,32 +168,17 @@ create_wrapper() {
 
 # Define paths
 LOG_FILE="$LOG_FILE"
-TOOLCHAIN_BIN_DIR="$TOOLCHAIN_BIN_DIR"
-BACKUP_DIR="$BACKUP_DIR"
-ORIGINAL_BIN="\$BACKUP_DIR/$bin_name"
 
 # Log the invocation with timestamp and arguments
-echo "\$(date '+%Y-%m-%d %H:%M:%S') : $bin_name called with arguments: \$@" >> "\$LOG_FILE"
+echo "$bin_name called with arguments: \$@" >> "\$LOG_FILE"
 
 # Change to the toolchain bin directory to preserve relative paths
-cd "\$TOOLCHAIN_BIN_DIR" || exit 1
+pushd "$TOOLCHAIN_BIN_DIR" > /dev/null || exit 1
 
-# Execute the original binary, capturing output and exit status
-# Capture both stdout and stderr
-output=\$("\$ORIGINAL_BIN" "\$@" 2>&1)
-status=\$?
+# Execute the original binary, replacing the current shell
+exec "$TOOLCHAIN_BIN_DIR/$bin_name" "\$@"
 
-# Log the output
-echo "\$(date '+%Y-%m-%d %H:%M:%S') : $bin_name output: \$output" >> "\$LOG_FILE"
-
-# Log the exit status
-echo "\$(date '+%Y-%m-%d %H:%M:%S') : $bin_name exited with status: \$status" >> "\$LOG_FILE"
-
-# Output the original binary's output to the caller
-echo "\$output"
-
-# Exit with the original binary's exit status
-exit \$status
+popd  > /dev/null || exit 1
 EOF
 
   # Make the wrapper executable

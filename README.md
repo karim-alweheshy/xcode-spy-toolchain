@@ -148,7 +148,6 @@ fi
 # Define Paths and Variables
 # --------------------------
 TOOLCHAIN_BIN_DIR="$(pwd)"
-BACKUP_DIR="$TOOLCHAIN_BIN_DIR/backups"
 LOG_FILE="$HOME/xcode_toolchain_logs.txt"
 
 # --------------------------
@@ -193,7 +192,7 @@ echo "Starting to wrap binaries in $TOOLCHAIN_BIN_DIR..."
 for BIN_PATH in "$TOOLCHAIN_BIN_DIR"/*; do
   BIN_NAME="$(basename "$BIN_PATH")"
 
-  # Skip directories and the backups directory itself
+  # Skip directories
   if [ -d "$BIN_PATH" ]; then
     continue
   fi
@@ -237,9 +236,7 @@ Replace /path/to/your/wrap_binaries.sh with the actual path where you created th
 sudo ./wrap_binaries.sh
 ```
 
--	The script will:
-    -	Backup original binaries to the backups directory.
-    -	Create wrapper scripts that log invocations and results, then execute the original binaries.
+-	The script will create wrapper scripts that log invocations and results, then execute the original binaries.
   
 Note: This process may take a few minutes depending on the number of binaries.
 

@@ -39,6 +39,7 @@ Copy the default Xcode toolchain to your user directory to create a custom toolc
 ```
 cp -R /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain
 ```
+It could be that your toolchain is not part of Xcode and instead residesd in `/Library/Developer/Toolchains` or user level on `~/Library/Developer/Toolchains`
 
 ### 2. **Edit ToolchainInfo.plist**
 

@@ -176,7 +176,7 @@ echo "$bin_name called with arguments: \$@" >> "\$LOG_FILE"
 pushd "$TOOLCHAIN_BIN_DIR" > /dev/null || exit 1
 
 # Execute the original binary, replacing the current shell
-exec "$TOOLCHAIN_BIN_DIR/$bin_name" "\$@"
+exec "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/$bin_name" "\$@"
 
 popd  > /dev/null || exit 1
 EOF

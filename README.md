@@ -156,11 +156,11 @@ LOG_FILE="$HOME/xcode_toolchain_logs.txt"
 # --------------------------
 create_wrapper() {
   local bin_path="$1"
-  local bin_name
-  # Resolve symlinks to get the actual binary name
-  bin_path_resolved="$(realpath "$bin_path")"
-  bin_name="$(basename "$bin_path_resolved")"
-  
+  local bin_name="$(basename "$bin_path")"
+
+  # Remove bin
+  rm -f "$bin_name"
+
   # Create the wrapper script
   echo "Creating wrapper for $bin_name..."
   cat <<EOF > "$TOOLCHAIN_BIN_DIR/$bin_name"
@@ -172,13 +172,9 @@ LOG_FILE="$LOG_FILE"
 # Log the invocation with timestamp and arguments
 echo "$bin_name called with arguments: \$@" >> "\$LOG_FILE"
 
-# Change to the toolchain bin directory to preserve relative paths
-pushd "$TOOLCHAIN_BIN_DIR" > /dev/null || exit 1
-
 # Execute the original binary, replacing the current shell
 exec "$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/bin/$bin_name" "\$@"
 
-popd  > /dev/null || exit 1
 EOF
 
   # Make the wrapper executable
@@ -195,6 +191,11 @@ for BIN_PATH in "$TOOLCHAIN_BIN_DIR"/*; do
 
   # Skip directories
   if [ -d "$BIN_PATH" ]; then
+    continue
+  fi
+
+  # Skip this file
+  if [ "$BIN_NAME" == "wrap_binaries.sh" ]; then
     continue
   fi
 

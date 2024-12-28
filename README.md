@@ -79,7 +79,7 @@ nano Info.plist
 	<key>CreatedDate</key>
 	<date>2024-12-11T21:37:15Z</date>
 	<key>DisplayName</key>
-	<string>Swift 6.0.3 Release 2024-12-10 (a)</string>
+	<string>My Custom Toolchain</string>
 	<key>OverrideBuildSettings</key>
 	<dict>
 		<key>ENABLE_BITCODE</key>

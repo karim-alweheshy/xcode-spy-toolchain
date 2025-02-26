@@ -48,7 +48,7 @@ Modify the ToolchainInfo.plist to recognize your custom toolchain.
   - Navigate to the Toolchain Directory:
 
 ```
-cd ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain/usr/share/toolchain/
+cd ~/Library/Developer/Toolchains/MyCustomToolchain.xctoolchain/
 ```
 
   - Remove ToolchainInfo.plist. Open ToolchainInfo.plist for Editing:

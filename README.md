@@ -71,13 +71,13 @@ nano Info.plist
 		<string>swift</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>org.swift.603202412101a</string>
+	<string>MyCustomToolchain</string>
 	<key>CompatibilityVersion</key>
 	<integer>2</integer>
 	<key>CompatibilityVersionDisplayString</key>
-	<string>Xcode 8.0</string>
+	<string>Xcode 16.2</string>
 	<key>CreatedDate</key>
-	<date>2024-12-11T21:37:15Z</date>
+	<date>2025-01-01T09:41:00Z</date>
 	<key>DisplayName</key>
 	<string>My Custom Toolchain</string>
 	<key>OverrideBuildSettings</key>
@@ -98,9 +98,9 @@ nano Info.plist
 	<key>ReportProblemURL</key>
 	<string>https://bugs.swift.org/</string>
 	<key>ShortDisplayName</key>
-	<string>Swift 6.0.3 Release</string>
+	<string>My custom toolchain</string>
 	<key>Version</key>
-	<string>6.0.3.20241210101</string>
+	<string>1.0.0</string>
 </dict>
 </plist>
 ```

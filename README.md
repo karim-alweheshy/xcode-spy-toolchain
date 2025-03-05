@@ -1,5 +1,7 @@
 # Xcode Toolchain Spy: Monitoring Xcode's Toolchain Executions
 
+**Before you begin** you might want to explore [swift-build](https://github.com/swiftlang/swift-build) instead to find out about the inner workings of xcode-build, playground or spm
+
 **Disclaimer:** Modifying Xcode's toolchain can lead to unexpected behavior, potential instability, and may violate Apple's terms of service. Proceed at your own risk. Ensure you have full backups and understand the implications of altering system binaries.
 
 ## Table of Contents
